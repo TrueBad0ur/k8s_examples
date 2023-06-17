@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mywebapp-deployment
+  labels:
+    app: mywebapp-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: mywebapp-proj
+  template:
+    metadata:
+      labels:
+        project: mywebapp-proj
+    spec:
+      containers:
+        - name: mywebapp-cont
+          image: truebad0ur/mywebapp:v5
+          ports:
+            - containerPort: 5000
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: mywebapp-autoscaler
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v2
+    kind: Deployment
+    name: mywebapp-deployment
+  minReplicas: 3
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 70
+    - type: Resource
+      resource:
+        name: memory
+        target:
+          type: Utilization
+          averageUtilization: 80
