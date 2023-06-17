@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mywebapp-pod
+  labels:
+    env: prod
+    app: main
+    tier: frontend
+    owner: truebad0ur
+spec:
+  containers:
+    - name: mywebapp-container
+      image: truebad0ur/mywebapp:v4
+      ports:
+        - containerPort: 5000
+    - name: api-container
+      image: tomcat:8.5.38
+      ports:
+        - containerPort: 8080
