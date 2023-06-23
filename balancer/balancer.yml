@@ -3,16 +3,16 @@ kind: Deployment
 metadata:
   name: gowebapp-deployment
   labels:
-    app: gowebapp-app
+    app: gowebapp
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: gowebapp-label
+      app: gowebapp
   template:
     metadata:
       labels:
-        app: gowebapp-label
+        app: gowebapp
     spec:
       containers:
         - name: gowebapp-cont
@@ -20,16 +20,14 @@ spec:
           ports:
             - containerPort: 8080
 ---
-apiVersion: v1 
-kind: Service 
+apiVersion: v1
+kind: Service
 metadata:
-  name: nodeport-gowebapp-service 
-spec: 
-  type: NodePort
+  name: balancer-service
+spec:
   selector:
-    app: gowebapp-label
-
+    app: gowebapp
   ports:
-    - nodePort: 31337
-      port: 8080 
+    - port: 3333
       targetPort: 8080
+  type: LoadBalancer
