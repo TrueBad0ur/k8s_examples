@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mywebapp-pod
+  labels:
+    app: main
+spec:
+  containers:
+    - name: mywebapp-container
+      image: alpine:latest
+      ports:
+        - containerPort: 5000
