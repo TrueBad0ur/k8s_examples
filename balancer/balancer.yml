@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: gowebapp-cont
-          image: truebad0ur/gowebapp:v3
+          image: truebad0ur/gowebapp:v5
           ports:
             - containerPort: 8080
 ---
